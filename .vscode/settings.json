@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "constituency.h": "c",
+        "typeinfo": "c",
+        "stdlib.h": "c"
+    }
+}
