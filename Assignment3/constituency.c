@@ -22,12 +22,15 @@ void constructConstituency(struct Constituency * const obj, char const *name,
 }
 
 void printConstituency(struct Constituency * const obj){
+    unsigned int mostNeighbours;
+    char name;
     printf("%s | %u neighbours | [", obj->name, obj->numNeighbours);
     int i;
     for (i = 0; i < obj->numNeighbours;i++){
         printf(" %u ", obj->neighbours[i]);
     }
-    printf("]");
+    printf("]\n");
+
 }
 
 void destructConstituency(struct Constituency * const obj){

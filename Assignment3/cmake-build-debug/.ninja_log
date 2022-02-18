@@ -1,6 +1,7 @@
 # ninja log v5
 0	64	6669038106713036	CMakeFiles/Assignment3.dir/main.c.obj	50386ec3e0c84430
-1	66	6669062911129019	CMakeFiles/Assignment3.dir/task1.c.obj	6e415b873591742a
+10	74	6669233629488478	CMakeFiles/Assignment3.dir/task2.c.obj	ca40741aeee76a33
+11	63	6669110029614948	CMakeFiles/Assignment3.dir/task1.c.obj	6e415b873591742a
 66	155	6669066852490188	Assignment3.exe	97aaeb5b3cb38216
-1	65	6669066851609389	CMakeFiles/Assignment3.dir/constituency.c.obj	99eb447d1fd62276
-0	122	6669077896475817	build.ninja	508b9eaf964d06fe
+1	75	6669233629518513	CMakeFiles/Assignment3.dir/constituency.c.obj	99eb447d1fd62276
+0	122	6669260295867452	build.ninja	508b9eaf964d06fe
