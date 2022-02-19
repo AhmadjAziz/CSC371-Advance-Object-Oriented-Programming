@@ -17,5 +17,6 @@ void constructConstituency(struct Constituency * const obj, char const *name, un
                            unsigned int const numNeighbours);
 void destructConstituency(struct Constituency * const obj);
 void printConstituency(struct Constituency * const obj);
+void copyConstituencies(struct Constituencies[int],unsigned int const numConstituencies);
 
 #endif

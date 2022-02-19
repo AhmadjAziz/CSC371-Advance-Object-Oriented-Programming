@@ -14,6 +14,7 @@
 // -----------------------------------------------------
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "constituency.h"
 
@@ -42,9 +43,29 @@ int main() {
             &constituencies[4], "Aberavon",
             (unsigned int[]){0 , 3}, 2);
 
+    struct Constituency * copy = copyConstituencies(constituencies[0],
+                                                    numConstituencies);
+
+    for(int i = 0; i < numConstituencies; i++) {
+        destructConstituency(&constituencies[i]);
+
+    void copyConstituencies(constituencies,
+    numConstituencies){
+
+        }
+
+    }
+
+
+
+
+
+
+
     struct Constituency *temp;
     struct Constituency *minCon = NULL;
     struct Constituency *maxCon= NULL;
+
 
 
     for(int i = 0; i < numConstituencies;i++){
