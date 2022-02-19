@@ -7,17 +7,20 @@
 
 #include <string>
 
+//declaration of class.
 class cat {
+    // declaring private members.
 private:
     std::string name;
     unsigned int lives;
 
 public:
+    //declaring public functions.
     cat(std::string name);
     cat(std::string name, unsigned int lives);
     ~cat();
 
-
+    // getters to return constant references.
     std::string getName() const;
     int getLives() const;
 };
