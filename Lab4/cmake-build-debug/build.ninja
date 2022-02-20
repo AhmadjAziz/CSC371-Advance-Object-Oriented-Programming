@@ -78,6 +78,12 @@ build CMakeFiles/Lab4.dir/task2.cpp.obj: CXX_COMPILER__Lab4_Debug D$:/SoftwareEn
   OBJECT_DIR = CMakeFiles\Lab4.dir
   OBJECT_FILE_DIR = CMakeFiles\Lab4.dir
 
+build CMakeFiles/Lab4.dir/task3.cpp.obj: CXX_COMPILER__Lab4_Debug D$:/SoftwareEngineering/CSC371-Advance-Object-Oriented-Programming/Lab4/task3.cpp || cmake_object_order_depends_target_Lab4
+  DEP_FILE = CMakeFiles\Lab4.dir\task3.cpp.obj.d
+  FLAGS = -g -std=gnu++23
+  OBJECT_DIR = CMakeFiles\Lab4.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lab4.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Lab4
@@ -86,7 +92,7 @@ build CMakeFiles/Lab4.dir/task2.cpp.obj: CXX_COMPILER__Lab4_Debug D$:/SoftwareEn
 #############################################
 # Link the executable Lab4.exe
 
-build Lab4.exe: CXX_EXECUTABLE_LINKER__Lab4_Debug CMakeFiles/Lab4.dir/task1.cpp.obj CMakeFiles/Lab4.dir/cat.cpp.obj CMakeFiles/Lab4.dir/task2.cpp.obj
+build Lab4.exe: CXX_EXECUTABLE_LINKER__Lab4_Debug CMakeFiles/Lab4.dir/task1.cpp.obj CMakeFiles/Lab4.dir/cat.cpp.obj CMakeFiles/Lab4.dir/task2.cpp.obj CMakeFiles/Lab4.dir/task3.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Lab4.dir
