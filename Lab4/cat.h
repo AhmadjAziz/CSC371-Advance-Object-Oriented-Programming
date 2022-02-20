@@ -21,7 +21,11 @@ public:
     ~cat();
 
     // getters to return constant references.
-    std::string getName() const;
-    int getLives() const;
+    const std::string getName();
+    const int getLives();
+
+    //declaring public setters.
+    void setName(const std:: string name);
+    void setLives(const unsigned int lives);
 };
 #endif
