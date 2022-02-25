@@ -41,3 +41,13 @@ void destructConstituency(struct Constituency * const obj){
     }
     obj->numNeighbours = 0;
 }
+struct Constituency *copyConstituencies(struct Constituency constituencies[], const unsigned int constiNum)
+{
+    struct Constituency *copiedConstituencies= (struct Constituency *)malloc(sizeof(constituencies[0])*constiNum);
+    int d;
+
+    for (d = 0; d < constiNum; d++) {
+        constructConstituency(&copiedConstituencies[d], (constituencies[d].name), (constituencies[d].neighbours), (constituencies[d].numNeighbours));
+    }
+    return copiedConstituencies;
+}

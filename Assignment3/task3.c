@@ -43,23 +43,20 @@ int main() {
             &constituencies[4], "Aberavon",
             (unsigned int[]){0 , 3}, 2);
 
-    struct Constituency * copy = copyConstituencies(constituencies[0],
-                                                    numConstituencies);
-
-    for(int i = 0; i < numConstituencies; i++) {
+    struct Constituency *copy = copyConstituencies(constituencies,
+                                                   numConstituencies);
+    int i = 0;
+    for (i = 0; i < numConstituencies; i++)
+    {
         destructConstituency(&constituencies[i]);
-
-    void copyConstituencies(constituencies,
-    numConstituencies){
-
-        }
-
     }
-
-
-
-
-
+    
+    int j;
+    for (j = 0; j < 5; j++)
+    {
+        printConstituency(&copy[j]);
+        printf("\n");
+    }
 
 
     struct Constituency *temp;
