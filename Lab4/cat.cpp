@@ -4,18 +4,25 @@
 #include <iostream>
 #include "cat.h"
 
+
+cat::cat() {
+    this->name = "Tom";
+    this->lives = 9;
+    std::cout<<"Default Constructor called...\n";
+}
 //overloaded constructor
 cat::cat(std::string name) {
     this->name = name;
     this->lives = 9; // hard coding the lives.
+    std::cout<<"Constructor called with name...\n";
 
 }
 
 //second overloaded constructor.
 cat::cat(std::string name, unsigned int lives) {
     this->name = name;
-    this-> lives = lives;
-    //std::cout<< "Constructor called with name and lives... \n" << this->name << " has "<< this->lives << "lives.\n";
+    this->lives = lives;
+    std::cout<<"Constructor called with name and lives...\n";
 }
 
 //destructor, prints so we can verify its call.
@@ -55,4 +62,6 @@ void cat::setLives(const unsigned int lives){
         this->lives = lives;
     }
 }
+
+
 

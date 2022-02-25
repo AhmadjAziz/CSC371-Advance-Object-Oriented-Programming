@@ -13,9 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c779c8d4-d60a-4a5b-b6c2-49a4d18ffcc4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constituency.c" beforeDir="false" afterPath="$PROJECT_DIR$/constituency.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constituency.h" beforeDir="false" afterPath="$PROJECT_DIR$/constituency.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task3.c" beforeDir="false" afterPath="$PROJECT_DIR$/task3.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab4/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab4/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,16 +52,12 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Lab4" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="structure.view.defaults.are.configured" value="true" />
   </component>
   <component name="RunManager">
     <configuration name="Assignment3" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Assignment3" TARGET_NAME="Assignment3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Assignment3" RUN_TARGET_NAME="Assignment3">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -78,6 +73,7 @@
       <updated>1645200459212</updated>
       <workItem from="1645200460466" duration="17408000" />
       <workItem from="1645293342224" duration="78000" />
+      <workItem from="1645750066336" duration="63000" />
     </task>
     <servers />
   </component>

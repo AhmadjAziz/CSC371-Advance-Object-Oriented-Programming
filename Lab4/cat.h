@@ -27,5 +27,7 @@ public:
     //declaring public setters.
     void setName(const std:: string name);
     void setLives(const unsigned int lives);
+
+    cat();
 };
 #endif
