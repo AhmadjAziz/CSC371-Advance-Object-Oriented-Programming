@@ -13,14 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c779c8d4-d60a-4a5b-b6c2-49a4d18ffcc4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Assignment3.dir/constituency.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Assignment3.dir/constituency.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Assignment3.dir/task2.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Assignment3.dir/task2.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constituency.c" beforeDir="false" afterPath="$PROJECT_DIR$/constituency.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constituency.h" beforeDir="false" afterPath="$PROJECT_DIR$/constituency.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task3.c" beforeDir="false" afterPath="$PROJECT_DIR$/task3.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +74,9 @@
       <workItem from="1645293342224" duration="78000" />
       <workItem from="1645750066336" duration="63000" />
       <workItem from="1645792717253" duration="1765000" />
+      <workItem from="1646259592431" duration="101000" />
+      <workItem from="1646259700471" duration="50000" />
+      <workItem from="1646259758305" duration="608000" />
     </task>
     <servers />
   </component>
