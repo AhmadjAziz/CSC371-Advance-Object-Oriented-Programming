@@ -5,17 +5,21 @@
 #ifndef LAB4_CAT_H
 #define LAB4_CAT_H
 #include <string>
+
 #include <sstream>
 
 namespace std {
 template <>
-struct hash <Cat> {
+struct hash<Cat> {
 size_t operator()(const Cat &obj) const {
-// ... compute a hash as an unsigned
-// integer and return it...
+unsigned long hash = 0;
 std::stringstream sstr;
-unsigned int x = &operator<<(sstr, obj);
-return ;
+sstr << obj;
+std::string str = sstr.str();
+
+std::size_t hash1 =  std::hash<Cat>()(str);
+
+return hash1;
 }
 };
 }
