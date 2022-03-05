@@ -12,18 +12,18 @@ int main(int argc, char* argv[]) {
         odd = true;
     }
     std::cout << "allocating clowder size of: "<<numberOfCats<<"\n";
-    cat* cats = new cat[numberOfCats];
+    Cat* cats = new Cat[numberOfCats];
 
     for(int i = 0; i<numberOfCats;i++){
         int name = (2 * i) + 1;
         int lives = (2 * i) + 2;
         if (odd == true && i == (numberOfCats-1)){
-            cat m(argv[name] , 9);
+            Cat m(argv[name] , 9);
             cats[i] = std::move(m);
         }
         else
         {
-            cat m(argv[name] , atoi(argv[lives]));
+            Cat m(argv[name] , atoi(argv[lives]));
             cats[i] = std::move(m);
         }
     }
