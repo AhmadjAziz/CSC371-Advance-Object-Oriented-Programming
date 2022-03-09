@@ -5,27 +5,11 @@
 #ifndef LAB4_CAT_H
 #define LAB4_CAT_H
 #include <string>
-
 #include <sstream>
-
-namespace std {
-template <>
-struct hash<Cat> {
-size_t operator()(const Cat &obj) const {
-unsigned long hash = 0;
-std::stringstream sstr;
-sstr << obj;
-std::string str = sstr.str();
-
-std::size_t hash1 =  std::hash<Cat>()(str);
-
-return hash1;
-}
-};
-}
 
 //declaration of class.
 class Cat {
+    
     // declaring private members.
 private:
     std::string name;
@@ -38,15 +22,29 @@ public:
     ~Cat();
 
     // getters to return constant references.
-    const std::string getName();
-    const int getLives();
+    const std::string getName() const;
+    const int getLives() const;
 
     //declaring public setters.
     void setName(const std:: string name);
     void setLives(const unsigned int lives);
 
-friend std::ostream &operator<<(std::ostream &os, const Cat& cat);
-
     Cat();
+
+friend std::ostream &operator<<(std::ostream &os, const Cat& cat);
 };
+
+namespace std {
+    template <>
+    struct hash<Cat> {
+        size_t operator()(const Cat &obj) const {
+        unsigned long hash = 0;
+        std::stringstream sstr;
+        sstr << obj;
+        std::string str = sstr.str();
+        std::size_t hash1 =  std::hash<std::string>()(str);
+        return hash1;
+        }
+    };
+}
 #endif

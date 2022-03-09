@@ -31,12 +31,12 @@ Cat::~Cat() {
 }
 
 //implementing the getter.
-const int Cat::getLives() {
+const int Cat::getLives() const{
     return  lives;
 }
 
 //implementing the getter.
-const std::string Cat::getName() {
+const std::string Cat::getName() const{
     return  name;
 }
 
@@ -61,6 +61,11 @@ void Cat::setLives(const unsigned int lives){
     }  else {
         this->lives = lives;
     }
+}   
+
+std::ostream &operator<<(std::ostream &os, const Cat &cat) {
+   os << cat.getName() << " has " << cat.getLives() << " lives.";
+   return os;
 }
 
 
