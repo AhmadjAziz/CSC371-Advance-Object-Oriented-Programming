@@ -22,12 +22,12 @@ Cat::Cat(std::string name) {
 Cat::Cat(std::string name, unsigned int lives) {
     this->name = name;
     this->lives = lives;
-    std::cout<<"Constructor called with name and lives...\n";
+    //std::cout<<"Constructor called with name and lives...\n";
 }
 
 //destructor, prints so we can verify its call.
 Cat::~Cat() {
-    std::cout<<"destructor called...\n";
+    //std::cout<<"destructor called...\n";
 }
 
 //implementing the getter.
@@ -62,6 +62,24 @@ void Cat::setLives(const unsigned int lives){
         this->lives = lives;
     }
 }
-
+std::ostream &operator<<(std::ostream &os, const Cat& cat){
+        return os <<cat.name <<" has " << cat.lives << " lives...";
+}
+bool operator==(const Cat &lhs, const Cat &rhs){
+    if(lhs.name == rhs.name && lhs.lives == lhs.lives)
+     return true;
+    else
+     return false;
+}
+bool operator<(const Cat &lhs, const Cat &rhs){
+    if(lhs.name < rhs.name){
+         return true;
+    }else{
+         if(lhs.lives < rhs.lives && lhs.name == rhs.name)
+             return true;
+        else 
+        return false;
+        }
+}
 
 

@@ -8,21 +8,6 @@
 
 #include <sstream>
 
-namespace std {
-template <>
-struct hash<Cat> {
-size_t operator()(const Cat &obj) const {
-unsigned long hash = 0;
-std::stringstream sstr;
-sstr << obj;
-std::string str = sstr.str();
-
-std::size_t hash1 =  std::hash<Cat>()(str);
-
-return hash1;
-}
-};
-}
 
 //declaration of class.
 class Cat {
@@ -46,7 +31,24 @@ public:
     void setLives(const unsigned int lives);
 
 friend std::ostream &operator<<(std::ostream &os, const Cat& cat);
-
+friend bool operator==(const Cat &lhs, const Cat &rhs);
+friend bool operator<(const Cat &lhs, const Cat &rhs);
     Cat();
 };
+
+namespace std {
+template <>
+struct hash<Cat> {
+size_t operator()(const Cat &obj) const {
+unsigned long hash = 0;
+std::stringstream sstr;
+sstr << obj;
+std::string str = sstr.str();
+
+std::size_t hash1 =  std::hash<std::string>{}(str);
+
+return hash1;
+}
+};
+}
 #endif
