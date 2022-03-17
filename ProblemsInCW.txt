@@ -1,0 +1,16 @@
+-> addItem might have error
+-> delete item in Categorty.cpp, never actually gets empty.
+-> is getCategory a reference aswell like getitem
+-> Do i need to make Item::operator== , it dosent work.
+-> for getting entry I am getting the value directly, is that good practice.
+
+
+[NEW PROBLEMS]
+-> lets say I merge map b into  map a, does memory for b clear? or do i still ahve to say b.clear().
+-> merge contents of a item in category class, add item
+			if exists
+				Iterate through second calling inserting into first if key does not exist.
+CURRENTLY NOT MERGING
+
+->confusing comment for new category.
+-> same merge error in wallet too.
