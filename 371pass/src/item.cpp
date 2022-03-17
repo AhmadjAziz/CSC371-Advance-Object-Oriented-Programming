@@ -134,6 +134,9 @@ bool operator==(Item _item_obj1, Item _item_obj2){
 // Example:
 //  Item iObj{"itemIdent"};
 //  std::string s = iObj.str();
-// std::string str(){
-//     return ;
+std::string Item::str(){
+   json j3 = entries;
+    return j.dump();
+}
+    
 // }
