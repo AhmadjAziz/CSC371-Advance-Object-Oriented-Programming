@@ -87,11 +87,13 @@ bool Wallet::addCategory(Category _category_obj){
 //  Wallet wObj{};
 //  wObj.newCategory("categoryIdent");
 //  auto cObj = wObj.getCategory("categoryIdent");
-// Category &Wallet::getCategory(std::string _category_ident){
-//     if(current_category.getIdent() == _category_ident)
-//         return current_category;
-//     throw std::out_of_range("Item not found");
-// }
+Category &Wallet::getCategory(std::string _category_ident){
+    auto it = category_list.find(_category_ident);
+    if(it != category_list.end()){
+        return it->second;
+    }
+    throw std::out_of_range("blah");
+}
 // TODO Write a function, deleteEntry, that takes one parameter, a Category
 //  identifier, and deletes it from the container, and returns true if the
 //  Category was deleted. If no Category exists, throw an appropriate exception.
@@ -100,14 +102,15 @@ bool Wallet::addCategory(Category _category_obj){
 //  Wallet wObj{};
 //  wObj.newCategory("categoryIdent");
 //  wObj.deleteCategory("categoryIdent");
-//  bool Wallet::deleteCategory(std::string _category_ident){
-//     if(current_category.getIdent() == _category_ident){
-//        current_category.setIdent("");
-//        num_categories = num_categories - 1;
-//         return true;
-//     }
-//     throw std::out_of_range("category not found");
-//  }
+ bool Wallet::deleteCategory(std::string _category_ident){
+    auto it = category_list.find(_category_ident);
+    if(it != category_list.end()){
+        category_list.erase(_category_ident);
+        return true;
+    }
+    throw std::out_of_range("blah");
+}
+
 
 // TODO Write a function, load, that takes one parameter, a std::string,
 //  containing the filename for the database. Open the file, read the contents,
