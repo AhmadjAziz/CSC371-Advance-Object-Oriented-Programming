@@ -15,6 +15,8 @@
 #define WALLET_H
 
 #include "category.h"
+#include <stdexcept>
+#include <fstream>
 
 class Wallet {
   private:
@@ -32,6 +34,7 @@ class Wallet {
     void load(std::string);
     std::string str();
     void save(std::string filename);
+    
   friend bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2);
 };
 

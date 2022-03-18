@@ -71,7 +71,7 @@ Item &Category::newItem(std::string _item_ident){
     if(it != items.end())
     //it->first is key, it->second is value for the key.
        return it->second;
-    throw std::__throw_runtime_error;
+    throw std::runtime_error("bleh");
 }
 
 // TODO Write a function, addItem, that takes one parameter, an Item object,

@@ -8,8 +8,6 @@
 // -----------------------------------------------------
 
 #include "wallet.h"
-#include <stdexcept>
-#include <fstream>
 
 
 // TODO Write a Wallet constructor that takes no parameters and constructs an
@@ -53,7 +51,7 @@ Category &Wallet::newCategory(std::string _cat_ident){
     auto it = category_list.find(_cat_ident);
     if(it != category_list.end())
        return it->second;
-    throw std::__throw_runtime_error;
+    throw std::runtime_error("bleh");
 }
 
 // TODO Write a function, addCategory, that takes one parameter, a Category
@@ -175,21 +173,15 @@ Category &Wallet::getCategory(std::string _category_ident){
 //  wObj.load("database.json");
 void Wallet::load(std::string filename){
     std::ifstream input(filename);
-    if(input.is_open()){
-        auto j = R"(
-        {
-        "Websites" : {
-            "Google":  {
-            "url":  "https://www.google.com/",
-            "username": "example@gmail.com",
-            "password": "pass1234"
-            }
-        }
-        }
-        )"_json;
-        input >>j;
+   std::ifstream i("file.json");
+   if(i.is_open()){
+    nlohmann::json j;
+    i >> j;
+    for(int i=0; i < 3;i++){
+
     }
-    throw std::__throw_runtime_error;
+    }
+    throw std::runtime_error("");
 }
 
 // TODO Write a function ,save, that takes one parameter, the path of the file
@@ -202,20 +194,11 @@ void Wallet::load(std::string filename){
 //  ...
 //  wObj.save("database.json");
 void Wallet::save(std::string filename){
+ std::string stringOfContents = this->str();
 
-    auto j = R"(
-      {
-       "Websites" : {
-         "Google":  {
-           "url":  "https://www.google.com/",
-           "username": "example@gmail.com",
-           "password": "pass1234"
-           }
-        }
-    }
-    )"_json;
-    std::ofstream o(filename);
-    o << std::setw(5) << j << std::endl;
+ nlohmann::json j = nlohmann::json::parse(stringOfContents);
+ std::ofstream file(filename);
+ file<<j;
 }
 
 // TODO Write an == operator overload for the Wallet class, such that two
@@ -240,7 +223,7 @@ bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2){
 // Example:
 //  Wallet wObj{};
 //  std::string s = wObj.str();
-std::string str(){
+std::string Wallet::str(){
  auto j = R"(
   {
   "Websites" : {
