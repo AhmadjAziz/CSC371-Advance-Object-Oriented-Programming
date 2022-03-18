@@ -69,6 +69,7 @@ void Category::setIdent(std::string _ident){
 Item &Category::newItem(std::string _item_ident){
     auto it = items.find(_item_ident);
     if(it != items.end())
+    //it->first is key, it->second is value for the key.
        return it->second;
     throw std::__throw_runtime_error;
 }
@@ -161,3 +162,16 @@ bool operator==(Category _cat_obj1, Category _cat_obj2){
 // Example:
 //  Category cObj{"categoryIdent"};
 //  std::string s = cObj.str();
+std::string str(){
+   auto j = R"(
+  {
+    "Starling": {
+      "Name": "Mr John Doe",
+      "Account Number": "12345678",
+      "Sort Code": "12-34-56"
+    }
+  }
+)"_json;
+    std::string s = j.dump();
+    return s;
+}

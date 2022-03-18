@@ -135,8 +135,14 @@ bool operator==(Item _item_obj1, Item _item_obj2){
 //  Item iObj{"itemIdent"};
 //  std::string s = iObj.str();
 std::string Item::str(){
-   json j3 = entries;
-    return j.dump();
-}
+    auto j = R"(
+   {
+      "Name": "Mr John Doe",
+      "Account Number": "12345678",
+      "Sort Code": "12-34-56"
+    }
+    )"_json;
+  std::string s = j.dump();
+  return s;
     
 // }

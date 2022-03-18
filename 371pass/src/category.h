@@ -32,6 +32,7 @@ class Category {
         Item &getItem(std::string _item_ident);
         bool deleteItem(std::string _item_ident);
         Category &operator=(std:: string _ident);
+        std::string str();
 
 friend bool operator==(Category _cat_obj1, Category _cat_obj2);
 };

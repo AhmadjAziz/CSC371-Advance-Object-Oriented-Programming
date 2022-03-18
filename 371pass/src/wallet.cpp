@@ -9,6 +9,8 @@
 
 #include "wallet.h"
 #include <stdexcept>
+#include <fstream>
+
 
 // TODO Write a Wallet constructor that takes no parameters and constructs an
 //  empty wallet.
@@ -171,6 +173,24 @@ Category &Wallet::getCategory(std::string _category_ident){
 // Example:
 //  Wallet wObj{};
 //  wObj.load("database.json");
+void Wallet::load(std::string filename){
+    std::ifstream input(filename);
+    if(input.is_open()){
+        auto j = R"(
+        {
+        "Websites" : {
+            "Google":  {
+            "url":  "https://www.google.com/",
+            "username": "example@gmail.com",
+            "password": "pass1234"
+            }
+        }
+        }
+        )"_json;
+        input >>j;
+    }
+    throw std::__throw_runtime_error;
+}
 
 // TODO Write a function ,save, that takes one parameter, the path of the file
 //  to write the database to. The function should serialise the Wallet object
@@ -181,6 +201,22 @@ Category &Wallet::getCategory(std::string _category_ident){
 //  wObj.load("database.json");
 //  ...
 //  wObj.save("database.json");
+void Wallet::save(std::string filename){
+
+    auto j = R"(
+      {
+       "Websites" : {
+         "Google":  {
+           "url":  "https://www.google.com/",
+           "username": "example@gmail.com",
+           "password": "pass1234"
+           }
+        }
+    }
+    )"_json;
+    std::ofstream o(filename);
+    o << std::setw(5) << j << std::endl;
+}
 
 // TODO Write an == operator overload for the Wallet class, such that two
 //  Wallet objects are equal only if they have the exact same data.
@@ -191,6 +227,9 @@ Category &Wallet::getCategory(std::string _category_ident){
 //  if(wObj1 == wObj2) {
 //    ...
 //  }
+bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2){
+    return _wallet_obj1 == _wallet_obj2;
+}
 
 // TODO Write a function, str, that takes no parameters and returns a
 //  std::string of the JSON representation of the data in the Wallet.
@@ -201,3 +240,19 @@ Category &Wallet::getCategory(std::string _category_ident){
 // Example:
 //  Wallet wObj{};
 //  std::string s = wObj.str();
+std::string str(){
+ auto j = R"(
+  {
+  "Websites" : {
+    "Google":  {
+      "url":  "https://www.google.com/",
+      "username": "example@gmail.com",
+      "password": "pass1234"
+    }
+  }
+}
+)"_json;
+    std::string s = j.dump();
+    return s;
+}
+

@@ -18,6 +18,7 @@
 
 #include <string>
 #include <map>
+#include "lib_json.hpp"
 
 class Item {
    //by default variables are private but adding private: for redability.
@@ -35,6 +36,7 @@ class Item {
         bool addEntry(std::string _key, std::string _value);
         std::string getEntry(std::string key);
         bool deleteEntry(std::string _key);
+        std::string str();
         
     friend bool operator==(Item _item_obj1, Item _item_obj2);
 };
