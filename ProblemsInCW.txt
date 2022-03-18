@@ -14,3 +14,10 @@ CURRENTLY NOT MERGING
 
 ->confusing comment for new category.
 -> same merge error in wallet too.
+
+---------------------------------------------------------------------------------------------
+Key points to remeber while coding
+
+use the file to deserialize ther JSON from string to JSON object provided by the library
+
+- Deserialize JSON string to JSON object	-> loop through this object constructing Category and item objs
