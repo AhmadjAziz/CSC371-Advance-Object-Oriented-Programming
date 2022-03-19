@@ -193,23 +193,23 @@ void Wallet::load(std::string fileName) {
         nlohmann::json j = nlohmann::json::parse(i);
         for (auto it = j.begin(); it != j.end(); ++it)
         {
-            std::string categoryIdentifier = it.key();//identifiers for category
-            nlohmann::json categoryContents = it.value();//data inside cat
-            Category newCat{categoryIdentifier};
+            std::string category_ident = it.key();//identifiers for category
+            nlohmann::json category_lists = it.value();//data inside cat
+            Category new_cat{category_ident};
 
-            for(auto it = categoryContents.begin(); it!= categoryContents.end();it++){
+            for(auto it = category_lists.begin(); it != category_lists.end(); it++){
                 std::string itemIdent = it.key();
-                nlohmann::json itemContents = it.value();
-                Item newItem{itemIdent};
+                nlohmann::json item_lists = it.value();
+                Item new_item{itemIdent};
 
-                for(auto it = itemContents.begin(); it!= itemContents.end();it++){
+                for(auto it = item_lists.begin(); it != item_lists.end(); it++){
                     std::string key = it.key();
                     std::string value = it.value();
-                    newItem.addEntry(key,value);
+                    new_item.addEntry(key, value);
                 }
-                newCat.addItem(newItem);
+                new_cat.addItem(new_item);
             }
-            this->addCategory(newCat);
+            this->addCategory(new_cat);
         }
 
     }
