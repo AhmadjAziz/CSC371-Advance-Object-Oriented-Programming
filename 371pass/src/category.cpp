@@ -9,13 +9,14 @@
 
 #include "category.h"
 #include <stdexcept>
+#include <iostream>
 
 // TODO Write a constructor that takes one parameter, a string identifier
 //  and initialises the object and member data.
 
 // Example:
 //  Category c{"categoryIdent"};
-Category::Category(std::string _ident):cat_ident(_ident), items(){}
+Category::Category(std::string _ident): cat_ident(_ident), items_list(){}
 
 // TODO Write a function, size, that takes no parameters and returns an unsigned
 //  int of the number of Items in the Category contains.
@@ -24,7 +25,7 @@ Category::Category(std::string _ident):cat_ident(_ident), items(){}
 //  Category c{"categoryIdent"};
 //  auto size = c.size();
 unsigned int Category::size(){
-    return items.size();
+    return items_list.size();
 }
 
 // TODO Write a function, empty, that takes no parameters and returns true
@@ -34,7 +35,7 @@ unsigned int Category::size(){
 //  Category c{"categoryIdent"};
 //  auto empty = c.empty();
 bool Category::empty(){
-    return items.size() == 0;
+    return items_list.size() == 0;
 
 }
 // TODO Write a function, getIdent, that returns the identifier for the
@@ -43,7 +44,7 @@ bool Category::empty(){
 // Example:
 //  Category cObj{"categoryIdent"};
 //  auto ident = cObj.getIdent();
-std::string Category::getIdent(){
+std::string Category::getIdent() const {
     return cat_ident;
 }
 
@@ -67,11 +68,18 @@ void Category::setIdent(std::string _ident){
 //  Category cObj{"categoryIdent"};
 //  cObj.newItem("itemIdent");
 Item &Category::newItem(std::string _item_ident){
-    auto it = items.find(_item_ident);
-    if(it != items.end())
-    //it->first is key, it->second is value for the key.
-       return it->second;
-    throw std::runtime_error("bleh");
+    auto it = items_list.find(_item_ident);
+    if(it != items_list.end()) {
+        //it->first is key, it->second is value for the key.
+        return it->second;
+    }
+    try {
+        Item tempItem(_item_ident);
+        addItem(tempItem);
+        return getItem(_item_ident);
+    } catch (const std::exception &e){
+        throw std::runtime_error("Item cannot be inserted");
+    }
 }
 
 // TODO Write a function, addItem, that takes one parameter, an Item object,
@@ -84,17 +92,19 @@ Item &Category::newItem(std::string _item_ident){
 //  Item iObj{"itemIdent"};
 //  cObj.addItem(iObj);
 bool Category::addItem(Item _item_obj){
-    auto it = items.find(_item_obj.getIdent());
-    if(it != items.end()){
-    //    //storing the item in a temorary map.
-    //    std::map <std::string, Item> temp {{_item_obj.getIdent(),_item_obj}};
-
-    //    //merging the temporary map with the original.
-    //    items.merge(temp);
-       return false;
+    auto it = items_list.find(_item_obj.getIdent());
+    if(it != items_list.end()){
+        Item &original = it->second;
+        std::map<std::string, std::string> tempMap = _item_obj.getEntries();
+        for(auto i= tempMap.begin();i != tempMap.end();i++){
+            //auto i is each item in the map tempMap.
+            //so i-> first should be a key, i->second is a value for entries
+            original.addEntry(i->first, i->second);
+        }
+        return false;
     }
-    //if item dosent exist we insert the item.
-    items.insert({_item_obj.getIdent(),_item_obj});
+    //if item doesn't exist we insert the item.
+    items_list.insert({_item_obj.getIdent(), _item_obj});
     return true;
 }
 
@@ -111,11 +121,11 @@ bool Category::addItem(Item _item_obj){
 //  cObj.newItem("itemIdent");
 //  auto iObj = cObj.getItem("itemIdent");
 Item &Category::getItem(std::string _item_ident){
-    auto it = items.find(_item_ident);
-    if(it != items.end()){
+    auto it = items_list.find(_item_ident);
+    if(it != items_list.end()){
         return it->second;
     }
-    throw std::out_of_range("blah");
+    throw std::out_of_range("cant get item");
 }
 
 // TODO Write a function, deleteItem, that takes one parameter, an Item
@@ -127,12 +137,12 @@ Item &Category::getItem(std::string _item_ident){
 //  cObj.newItem("itemIdent");
 //  bool result = cObj.deleteItem("itemIdent");
 bool Category::deleteItem(std::string _item_ident){
-     auto it = items.find(_item_ident);
-    if(it != items.end()){
-        items.erase(_item_ident);
+     auto it = items_list.find(_item_ident);
+    if(it != items_list.end()){
+        items_list.erase(_item_ident);
         return true;
     }
-    throw std::out_of_range("blah");
+    throw std::out_of_range("cant delete Item");
 }
 
 
@@ -147,11 +157,14 @@ bool Category::deleteItem(std::string _item_ident){
 //  if(cObj1 == cObj2) {
 //    ...
 //  }
+std::map<std::string, Item> &Category::getItems(){
+    return items_list;
+}
 bool operator==(Category _cat_obj1, Category _cat_obj2){
-    //the two statemeents check for idents and Items in both objects 
+    //the two statements check for idents and Items in both objects
    //and return true if they are equal.    
    return ((_cat_obj1.cat_ident == _cat_obj2.cat_ident) 
-            && (_cat_obj1.items == _cat_obj2.items));
+            && (_cat_obj1.items_list == _cat_obj2.items_list));
 }
 
 // TODO Write a function, str, that takes no parameters and returns a
@@ -162,16 +175,25 @@ bool operator==(Category _cat_obj1, Category _cat_obj2){
 // Example:
 //  Category cObj{"categoryIdent"};
 //  std::string s = cObj.str();
-std::string str(){
-   auto j = R"(
-  {
-    "Starling": {
-      "Name": "Mr John Doe",
-      "Account Number": "12345678",
-      "Sort Code": "12-34-56"
+//  std::string Category::str() {
+const std::string Category::str() const{
+    std::stringstream json;
+    json << "\"" << this->getIdent() <<"\" :{";
+    int i =0;
+    //the for loop goes through list of items and format it into json.
+    for(auto const& j:items_list){
+        Item item = j.second;
+        std::string list_of_entries = item.str();
+        json << list_of_entries;
+
+        int size = this->items_list.size();
+        if (i<(size-1)){
+            json << ",";
+        }
+        i++;
     }
-  }
-)"_json;
-    std::string s = j.dump();
-    return s;
+    json << "}";
+    std::string jsonStr = json.str();
+    return jsonStr;
 }
+

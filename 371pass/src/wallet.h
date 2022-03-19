@@ -32,7 +32,7 @@ class Wallet {
     Category &getCategory(std::string _category_ident);
     bool deleteCategory(std::string _category_ident);
     void load(std::string);
-    std::string str();
+    const std::string str() const;
     void save(std::string filename);
     
   friend bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2);

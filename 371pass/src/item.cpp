@@ -10,6 +10,7 @@
 #include "item.h"
 #include <stdexcept>
 
+
 // TODO Write a constructor that takes one parameter, a string identifier
 //  and initialises the object and member data.
 //
@@ -52,7 +53,7 @@ void Item::setIdent(std::string _item_ident){
 // Example:
 //  Item iObj{"identIdent"};
 //  auto ident = iObj.getIdent();
-std::string Item::getIdent(){
+std::string Item::getIdent() const {
     return item_ident;
 }
 
@@ -87,7 +88,7 @@ std::string Item::getEntry(std::string _key){
     if(it != entries.end()){
         return it->second;
     }
-    throw std::out_of_range("blah");
+    throw std::out_of_range("item dosent exist");
 }
 
 
@@ -106,6 +107,11 @@ bool Item::deleteEntry(std::string _key){
         return true;
     }
     throw std::invalid_argument("key not found");
+}
+
+//The method returns a reference to the map of all entries so that it can be used for merging data.
+std::map<std::string, std::string> &Item::getEntries(){
+    return entries;
 }
 
 // TODO Write an == operator overload for the Item class, such that two
@@ -134,14 +140,26 @@ bool operator==(Item _item_obj1, Item _item_obj2){
 // Example:
 //  Item iObj{"itemIdent"};
 //  std::string s = iObj.str();
-std::string Item::str(){
-    auto j = R"(
-   {
-      "Name": "Mr John Doe",
-      "Account Number": "12345678",
-      "Sort Code": "12-34-56"
+const std::string Item::str() const{
+    std::stringstream json;
+    json << "\""<<this->getIdent()<<"\":{";
+    //for loop entering each key and value for entry in json format
+    int i =0;
+    for(auto const& x:entries){
+        std::string key = x.first;
+        std::string value = x.second;
+        //add each key val pair in json format
+        json << "\"" << key << "\"" << ": \"" << value << "\"";
+        //better to not use size function to avoid comparing unsigned int with int
+        int size = this->entries.size();
+        if (i<(size-1)){
+            //if it is not the last entry in the entries map we add a comma for separation
+            json<<",";
+        }
+        i++;
     }
-    )"_json;
-  std::string s = j.dump();
-  return s;
+    json << "}";
+    std::string output = json.str();
+    return output;
 }
+

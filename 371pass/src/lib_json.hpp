@@ -4548,7 +4548,7 @@ template<typename IteratorType> class iteration_proxy_value
     }
 };
 
-/// proxy class for the items() function
+/// proxy class for the items_list() function
 template<typename IteratorType> class iteration_proxy
 {
   private:
@@ -8974,7 +8974,7 @@ class binary_reader
                 return get_cbor_string(s) && sax->string(s);
             }
 
-            // array (0x00..0x17 data items follow)
+            // array (0x00..0x17 data items_list follow)
             case 0x80:
             case 0x81:
             case 0x82:
@@ -9028,7 +9028,7 @@ class binary_reader
             case 0x9F: // array (indefinite length)
                 return get_cbor_array(std::size_t(-1), tag_handler);
 
-            // map (0x00..0x17 pairs of data items follow)
+            // map (0x00..0x17 pairs of data items_list follow)
             case 0xA0:
             case 0xA1:
             case 0xA2:
@@ -18640,7 +18640,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                 // flatten the current json_value to a heap-allocated stack
                 std::vector<basic_json> stack;
 
-                // move the top-level items to stack
+                // move the top-level items_list to stack
                 if (t == value_t::array)
                 {
                     stack.reserve(array->size());
@@ -22482,8 +22482,8 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     future.
 
     @deprecated This stream operator is deprecated and will be removed in
-                future 4.0.0 of the library. Please use @ref items() instead;
-                that is, replace `json::iterator_wrapper(j)` with `j.items()`.
+                future 4.0.0 of the library. Please use @ref items_list() instead;
+                that is, replace `json::iterator_wrapper(j)` with `j.items_list()`.
     */
     JSON_HEDLEY_DEPRECATED_FOR(3.1.0, items())
     static iteration_proxy<iterator> iterator_wrapper(reference ref) noexcept
@@ -22508,7 +22508,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     reference to the JSON values is returned, so there is no access to the
     underlying iterator.
 
-    For loop without `items()` function:
+    For loop without `items_list()` function:
 
     @code{cpp}
     for (auto it = j_object.begin(); it != j_object.end(); ++it)
@@ -22517,7 +22517,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     }
     @endcode
 
-    Range-based for loop without `items()` function:
+    Range-based for loop without `items_list()` function:
 
     @code{cpp}
     for (auto it : j_object)
@@ -22527,21 +22527,21 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     }
     @endcode
 
-    Range-based for loop with `items()` function:
+    Range-based for loop with `items_list()` function:
 
     @code{cpp}
-    for (auto& el : j_object.items())
+    for (auto& el : j_object.items_list())
     {
         std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
     }
     @endcode
 
-    The `items()` function also allows to use
+    The `items_list()` function also allows to use
     [structured bindings](https://en.cppreference.com/w/cpp/language/structured_binding)
     (C++17):
 
     @code{cpp}
-    for (auto& [key, val] : j_object.items())
+    for (auto& [key, val] : j_object.items_list())
     {
         std::cout << "key: " << key << ", value:" << val << '\n';
     }
@@ -22551,7 +22551,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
           element as string (see example). For primitive types (e.g., numbers),
           `key()` returns an empty string.
 
-    @warning Using `items()` on temporary objects is dangerous. Make sure the
+    @warning Using `items_list()` on temporary objects is dangerous. Make sure the
              object's lifetime exeeds the iteration. See
              <https://github.com/nlohmann/json/issues/2040> for more
              information.
@@ -22559,7 +22559,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     @return iteration proxy object wrapping @a ref with an interface to use in
             range-based for loops
 
-    @liveexample{The following code shows how the function is used.,items}
+    @liveexample{The following code shows how the function is used.,items_list}
 
     @exceptionsafety Strong guarantee: if an exception is thrown, there are no
     changes in the JSON value.
@@ -22574,7 +22574,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     }
 
     /*!
-    @copydoc items()
+    @copydoc items_list()
     */
     iteration_proxy<const_iterator> items() const noexcept
     {

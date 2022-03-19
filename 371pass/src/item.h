@@ -19,9 +19,11 @@
 #include <string>
 #include <map>
 #include "lib_json.hpp"
+#include <sstream>
+
 
 class Item {
-   //by default variables are private but adding private: for redability.
+   //by default variables are private but adding private: for readability.
     private:
         std::string item_ident;
         std::map <std::string, std::string> entries;
@@ -31,12 +33,13 @@ class Item {
         Item(std::string _item_ident);
         unsigned int size();
         bool empty();
-        std::string getIdent();
+        std::string getIdent() const;
         void setIdent(std::string _new_ident);
         bool addEntry(std::string _key, std::string _value);
         std::string getEntry(std::string key);
         bool deleteEntry(std::string _key);
-        std::string str();
+        const std::string str() const ;
+        std::map<std::string, std::string> &getEntries();
         
     friend bool operator==(Item _item_obj1, Item _item_obj2);
 };

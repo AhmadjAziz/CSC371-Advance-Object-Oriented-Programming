@@ -7,4 +7,5 @@
 - used single line if statements, (as per convention, can ignore brackets if that is the case).
 - followed naming conventions seen in slide ( int first_second) no capitals.
 
-- 
+- I made my own getEntries in Item so that I can access the entries from category when
+trying to merge the contents of item.

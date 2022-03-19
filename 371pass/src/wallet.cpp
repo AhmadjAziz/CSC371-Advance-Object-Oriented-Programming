@@ -8,6 +8,7 @@
 // -----------------------------------------------------
 
 #include "wallet.h"
+#include <iostream>
 
 
 // TODO Write a Wallet constructor that takes no parameters and constructs an
@@ -49,9 +50,17 @@ bool Wallet::empty(){
 //  wObj.newCategory("categoryIdent");
 Category &Wallet::newCategory(std::string _cat_ident){
     auto it = category_list.find(_cat_ident);
-    if(it != category_list.end())
-       return it->second;
-    throw std::runtime_error("bleh");
+    if(it != category_list.end()) {
+        //it->first is key, it->second is value for the key.
+        return it->second;
+    }
+    try {
+        Category tempCat(_cat_ident);
+        addCategory(tempCat);
+        return getCategory(_cat_ident);
+    } catch (std::exception &e){
+        throw std::runtime_error("bleh");
+    }
 }
 
 // TODO Write a function, addCategory, that takes one parameter, a Category
@@ -65,18 +74,25 @@ Category &Wallet::newCategory(std::string _cat_ident){
 //  Category cObj{"categoryIdent"};
 //  wObj.addCategory(cObj);
 bool Wallet::addCategory(Category _category_obj){
- auto it = category_list.find(_category_obj.getIdent());
+    auto it = category_list.find(_category_obj.getIdent());
     if(it != category_list.end()){
-    //    //storing the item in a temorary map.
-    //    std::map <std::string, Category> temp {{_category_obj.getIdent(),_category_obj}};
 
-    //    //merging the temporary map with the original.
-    //    category_list.merge(temp);
-       return false;
+        //the list of items.
+        Category &original_cat = it->second;
+        //get map of all items in parameter obj
+        std::map<std::string, Item> list_of_items = _category_obj.getItems();
+        //loop through all items and if the item is same as one in category
+        for(auto i = list_of_items.begin(); i != list_of_items.end(); i++){
+            original_cat.addItem(i->second);
+        }
+        return false;
     }
-    //if item dosent exist we insert the item.
-    category_list.insert({_category_obj.getIdent(),_category_obj});
-    return true;
+    try{
+        category_list.insert({_category_obj.getIdent(),_category_obj});
+        return true;
+    } catch(std::exception &e){
+        throw std::runtime_error("bleh");
+    }
 }
 
 // TODO Write a function, getCategory, that takes one parameter, a Category
@@ -92,7 +108,7 @@ Category &Wallet::getCategory(std::string _category_ident){
     if(it != category_list.end()){
         return it->second;
     }
-    throw std::out_of_range("blah");
+    throw std::out_of_range("category doesen't exist ");
 }
 // TODO Write a function, deleteEntry, that takes one parameter, a Category
 //  identifier, and deletes it from the container, and returns true if the
@@ -108,7 +124,7 @@ Category &Wallet::getCategory(std::string _category_ident){
         category_list.erase(_category_ident);
         return true;
     }
-    throw std::out_of_range("blah");
+    throw std::out_of_range("cant delete category");
 }
 
 
@@ -119,11 +135,11 @@ Category &Wallet::getCategory(std::string _category_ident){
 //
 // A note on clashes:
 //  If you encounter two categories with the same key, the categories should be
-//  merged (not replaced!). If you encounter two items with the same key in the
-//  same category, the items should be merged (not replaced!). If you encounter
+//  merged (not replaced!). If you encounter two items_list with the same key in the
+//  same category, the items_list should be merged (not replaced!). If you encounter
 //  two entries with the same key in the same item, the entries should be merged
-//  (undefined as to which value is picked). Two items in different categories
-//  can have the same key, as can two entries in different items.
+//  (undefined as to which value is picked). Two items_list in different categories
+//  can have the same key, as can two entries in different items_list.
 //
 // JSON formatting:
 //  The JSON file has the following format (see the sample database.json file
@@ -171,18 +187,37 @@ Category &Wallet::getCategory(std::string _category_ident){
 // Example:
 //  Wallet wObj{};
 //  wObj.load("database.json");
-void Wallet::load(std::string filename){
-    std::ifstream input(filename);
-   std::ifstream i("file.json");
-   if(i.is_open()){
-    nlohmann::json j;
-    i >> j;
-    for(int i=0; i < 3;i++){
+void Wallet::load(std::string fileName) {
+    std::ifstream i(fileName);
+    if(i.is_open()){
+        nlohmann::json j = nlohmann::json::parse(i);
+        for (auto it = j.begin(); it != j.end(); ++it)
+        {
+            std::string categoryIdentifier = it.key();//identifiers for category
+            nlohmann::json categoryContents = it.value();//data inside cat
+            Category newCat{categoryIdentifier};
+
+            for(auto it = categoryContents.begin(); it!= categoryContents.end();it++){
+                std::string itemIdent = it.key();
+                nlohmann::json itemContents = it.value();
+                Item newItem{itemIdent};
+
+                for(auto it = itemContents.begin(); it!= itemContents.end();it++){
+                    std::string key = it.key();
+                    std::string value = it.value();
+                    newItem.addEntry(key,value);
+                }
+                newCat.addItem(newItem);
+            }
+            this->addCategory(newCat);
+        }
 
     }
+    else{
+        throw std::runtime_error("File won't open");
     }
-    throw std::runtime_error("");
 }
+
 
 // TODO Write a function ,save, that takes one parameter, the path of the file
 //  to write the database to. The function should serialise the Wallet object
@@ -194,11 +229,11 @@ void Wallet::load(std::string filename){
 //  ...
 //  wObj.save("database.json");
 void Wallet::save(std::string filename){
- std::string stringOfContents = this->str();
-
- nlohmann::json j = nlohmann::json::parse(stringOfContents);
+ std::string data = this->str();
+ nlohmann::json j = nlohmann::json::parse(data);
  std::ofstream file(filename);
  file<<j;
+ file.close();
 }
 
 // TODO Write an == operator overload for the Wallet class, such that two
@@ -223,19 +258,28 @@ bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2){
 // Example:
 //  Wallet wObj{};
 //  std::string s = wObj.str();
-std::string Wallet::str(){
- auto j = R"(
-  {
-  "Websites" : {
-    "Google":  {
-      "url":  "https://www.google.com/",
-      "username": "example@gmail.com",
-      "password": "pass1234"
+const std::string Wallet::str() const{
+    std::stringstream json;
+    json<< "{";
+    int i = 0;
+    for(auto const& x:category_list){
+        Category category = x.second;
+        //adding each category in Wallet obj under the wallet's json header
+        std::string  categoryEntries = category.str();
+        json<<categoryEntries;
+
+        //checking if it's not the last category, so we can add a comma
+        int size = this->category_list.size();
+        if(i<(size-1)){
+            json << ",";
+        }
+        i++;
     }
-  }
+    json << "}";
+    std::string jsonStr = json.str();
+    return jsonStr;
 }
-)"_json;
-    std::string s = j.dump();
-    return s;
-}
+
+
+
 

@@ -65,7 +65,7 @@ SCENARIO("A Wallet object can load from a JSON file", "[wallet]") {
 
         THEN("the file will be imported without an exception") {
 
-          //REQUIRE_NOTHROW(wObj1.load(filePath));
+          REQUIRE_NOTHROW(wObj1.load(filePath));
           REQUIRE(wObj1.size() == 2);
 
           REQUIRE_NOTHROW(wObj1.getCategory("Websites"));
