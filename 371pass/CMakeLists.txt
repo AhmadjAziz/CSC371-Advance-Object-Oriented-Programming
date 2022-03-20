@@ -28,4 +28,4 @@ add_executable(371pass
         tests/test7.cpp
         tests/test8.cpp
         tests/test9.cpp
-        tests/testall.cpp)
+        tests/testall.cpp tests/mytest.cpp)

@@ -78,7 +78,7 @@ Item &Category::newItem(std::string _item_ident){
         addItem(tempItem);
         return getItem(_item_ident);
     } catch (const std::exception &e){
-        throw std::runtime_error("Item cannot be inserted");
+        throw std::runtime_error("Error: invalid item argument(s).");
     }
 }
 
@@ -125,7 +125,7 @@ Item &Category::getItem(std::string _item_ident){
     if(it != items_list.end()){
         return it->second;
     }
-    throw std::out_of_range("cant get item");
+    throw std::out_of_range("Error: invalid item argument(s).");
 }
 
 // TODO Write a function, deleteItem, that takes one parameter, an Item
@@ -142,7 +142,7 @@ bool Category::deleteItem(std::string _item_ident){
         items_list.erase(_item_ident);
         return true;
     }
-    throw std::out_of_range("cant delete Item");
+    throw std::out_of_range("Error: invalid item argument(s).");
 }
 
 
@@ -186,7 +186,7 @@ const std::string Category::str() const{
         Item item = x.second;
         std::string items_list = item.str();
         output << items_list;
-        int size = (this -> items_list.size())-1;
+        int size = (this->items_list.size())-1;
         if (i<size){
             output << ",";
         }

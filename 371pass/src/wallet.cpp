@@ -59,7 +59,7 @@ Category &Wallet::newCategory(std::string _cat_ident){
         addCategory(tempCat);
         return getCategory(_cat_ident);
     } catch (std::exception &e){
-        throw std::runtime_error("cannot make newCategory.");
+        throw std::runtime_error("Error: invalid category argument(s).");
     }
 }
 
@@ -91,7 +91,7 @@ bool Wallet::addCategory(Category _category_obj){
         category_list.insert({_category_obj.getIdent(),_category_obj});
         return true;
     } catch(std::exception &e){
-        throw std::runtime_error("Error adding item");
+        throw std::runtime_error("Error: invalid category argument(s).");
     }
 }
 
@@ -124,7 +124,7 @@ Category &Wallet::getCategory(std::string _category_ident){
         category_list.erase(_category_ident);
         return true;
     }
-    throw std::out_of_range("cant delete category");
+    throw std::out_of_range("Error: invalid category argument(s).");
 }
 
 
@@ -246,7 +246,7 @@ void Wallet::save(std::string filename){
 //  if(wObj1 == wObj2) {
 //    ...
 //  }
-bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2){
+bool operator==(const Wallet _wallet_obj1, const Wallet _wallet_obj2){
     return _wallet_obj1 == _wallet_obj2;
 }
 
@@ -269,7 +269,7 @@ const std::string Wallet::str() const{
         Category category = x.second;
         std::string  category_list = category.str();
         output << category_list;
-        int size = (this -> category_list.size())-1;
+        int size = (this->category_list.size())-1;
         if(i<size){
             output << ",";
         }

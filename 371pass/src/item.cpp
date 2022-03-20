@@ -69,10 +69,9 @@ bool Item::addEntry(std::string _key, std::string _value){
    if(it != entries.end()){
        it->second = _value;
        return false;
-   } else {
+   }
        entries.insert({_key,_value});
        return true;
-   }
 }
 
 // TODO Write a function, getEntry, that takes one parameter, an entry
@@ -91,7 +90,6 @@ std::string Item::getEntry(std::string _key){
     throw std::out_of_range("Error: invalid entry argument(s).");
 }
 
-
 // TODO Write a function, deleteEntry, that takes one parameter, an entry
 //  key, deletes it from the container, and returns true if the Item was
 //  deleted. If no entry exists, throw an appropriate exception.
@@ -106,7 +104,7 @@ bool Item::deleteEntry(std::string _key){
         entries.erase(_key);
         return true;
     }
-    throw std::invalid_argument("key not found");
+    throw std::invalid_argument("Error: invalid entry argument(s).");
 }
 
 //The method returns a reference to the map of all entries so that it can be used for merging data.

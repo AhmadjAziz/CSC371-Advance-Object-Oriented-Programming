@@ -111,7 +111,7 @@ int App::run(int argc, char *argv[]) {
             } else {
                 //we check that the person dosen't bypass categories input.
                 try {
-                    throw std::runtime_error("Error: missing category argument(s).");
+                    throw std::runtime_error("Error: missing category, item or entry argument(s).");
                 } catch (std::exception &e) {
                     std::cerr << e.what();
                     exit(1);
@@ -211,15 +211,30 @@ int App::run(int argc, char *argv[]) {
                             std::string value;
                             std::getline(entryInput, key, ',');
                             std::getline(entryInput, value, ',');
+                            // makes sure we are updating with a proper value.
+                            if(value.empty()){
+                                throw std::runtime_error("Error: invalid entry argument(s).");
+                            }
                             temp_item.addEntry(key, value);
                         } catch (std::exception &e) {
-                            std::cerr << e.what();
+                            std::cerr << "Error: invalid entry argument(s).";
+                            exit(1);
                         }
                     }
                     try {
+                        //making sure item exists before making it
                         temp_cat.addItem(temp_item);
                     } catch (std::exception &e) {
                         std::cerr << e.what();
+                    }
+                }else {
+                    if (args.count("entry")) {
+                        try {
+                            throw std::runtime_error("Error: missing category, item or entry argument(s).");
+                        } catch (std::exception &e) {
+                            std::cerr << e.what();
+                            exit(1);
+                        }
                     }
                 }
                 try {
@@ -228,6 +243,14 @@ int App::run(int argc, char *argv[]) {
                     wObj.save(db);
                 } catch (std::exception &e) {
                     std::cerr << e.what();
+                }
+            }else {
+                //we check that the person dosen't bypass categories input.
+                try {
+                    throw std::runtime_error("Error: missing category, item or entry argument(s).");
+                } catch (std::exception &e) {
+                    std::cerr << e.what();
+                    exit(1);
                 }
             }
             break;
