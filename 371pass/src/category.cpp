@@ -186,13 +186,14 @@ const std::string Category::str() const{
         Item item = x.second;
         std::string items_list = item.str();
         output << items_list;
-        int size = this->items_list.size();
-        if (i<(size-1)){
+        int size = (this -> items_list.size())-1;
+        if (i<size){
             output << ",";
         }
         i++;
     }
     output << "}";
+
     return output.str();
     }
 

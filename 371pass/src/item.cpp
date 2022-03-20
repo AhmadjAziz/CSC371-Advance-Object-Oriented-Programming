@@ -149,15 +149,13 @@ const std::string Item::str() const{
         std::string value = x.second;
         output << "\"" << key << "\"" << ":\"" << value << "\"";
         //loop through all the entries.
-        int size = this->entries.size();
-        if (i<(size-1)){
+        int size = (this->entries.size())-1;
+        if (i<size){
             output << ",";
-            //if it is not the last entry in the entries map we add a comma for separation
         }
         i++;
     }
     output << "}";
-    output.str();
     return output.str();
     }
 

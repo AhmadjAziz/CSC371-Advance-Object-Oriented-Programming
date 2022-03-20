@@ -188,9 +188,9 @@ Category &Wallet::getCategory(std::string _category_ident){
 //  Wallet wObj{};
 //  wObj.load("database.json");
 void Wallet::load(std::string fileName) {
-    std::ifstream i(fileName);
-    if(i.is_open()){
-        nlohmann::json j = nlohmann::json::parse(i);
+    std::ifstream file(fileName);
+    if(file.is_open()){
+        nlohmann::json j = nlohmann::json::parse(file);
         for (auto it = j.begin(); it != j.end(); ++it)
         {
             std::string category_ident = it.key();//identifiers for category
@@ -216,6 +216,7 @@ void Wallet::load(std::string fileName) {
     else{
         throw std::runtime_error("Error: invalid db argument(s).");
     }
+    file.close();
 }
 
 
@@ -268,8 +269,8 @@ const std::string Wallet::str() const{
         Category category = x.second;
         std::string  category_list = category.str();
         output << category_list;
-        int size = this->category_list.size();
-        if(i<(size-1)){
+        int size = (this -> category_list.size())-1;
+        if(i<size){
             output << ",";
         }
         i++;

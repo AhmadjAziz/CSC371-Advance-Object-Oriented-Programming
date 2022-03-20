@@ -84,20 +84,34 @@ int App::run(int argc, char *argv[]) {
                             temp_item.addEntry(key, value);
                         } catch (std::exception &e) {
                             std::cerr << e.what();
-                            exit(1);
                         }
                     }
                     try {
                         temp_cat.addItem(temp_item);
                     } catch (std::exception &e) {
                         std::cerr << e.what();
-                        exit(1);
+                    }
+                } else {
+                    if (args.count("entry")) {
+                        try {
+                            throw std::runtime_error("Error: missing category, item or entry argument(s).");
+                        } catch (std::exception &e) {
+                            std::cerr << e.what();
+                            exit(1);
+                        }
                     }
                 }
                 try {
                     //add the entire thing to our object.
                     wObj.addCategory(temp_cat);
                     wObj.save(db);
+                } catch (std::exception &e) {
+                    std::cerr << e.what();
+                }
+            } else {
+                //we check that the person dosen't bypass categories input.
+                try {
+                    throw std::runtime_error("Error: missing category argument(s).");
                 } catch (std::exception &e) {
                     std::cerr << e.what();
                     exit(1);
@@ -174,6 +188,7 @@ int App::run(int argc, char *argv[]) {
                     }
                 }
             }
+
             break;
         case Action::UPDATE:
             //Only read if the first instance is a category, otherwise we go to else.
@@ -199,14 +214,12 @@ int App::run(int argc, char *argv[]) {
                             temp_item.addEntry(key, value);
                         } catch (std::exception &e) {
                             std::cerr << e.what();
-                            exit(1);
                         }
                     }
                     try {
                         temp_cat.addItem(temp_item);
                     } catch (std::exception &e) {
                         std::cerr << e.what();
-                        exit(1);
                     }
                 }
                 try {
@@ -215,7 +228,6 @@ int App::run(int argc, char *argv[]) {
                     wObj.save(db);
                 } catch (std::exception &e) {
                     std::cerr << e.what();
-                    exit(1);
                 }
             }
             break;
@@ -250,7 +262,6 @@ int App::run(int argc, char *argv[]) {
                             wObj.save(db);
                         } catch (std::exception &e) {
                             std::cerr << e.what();
-                            exit(1);
                         }
                     } else {
                         try {
@@ -258,7 +269,6 @@ int App::run(int argc, char *argv[]) {
                             wObj.save(db);
                         } catch (std::exception &e) {
                             std::cerr << e.what();
-                            exit(1);
                         }
                     }
                 } else {
@@ -274,9 +284,9 @@ int App::run(int argc, char *argv[]) {
                     wObj.save(db);
                 } catch (std::exception &e) {
                     std::cerr << e.what();
-                    exit(1);
                 }
             }
+
             break;
 
         default:
