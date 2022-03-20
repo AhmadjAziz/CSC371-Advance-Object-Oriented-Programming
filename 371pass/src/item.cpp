@@ -88,7 +88,7 @@ std::string Item::getEntry(std::string _key){
     if(it != entries.end()){
         return it->second;
     }
-    throw std::out_of_range("item dosent exist");
+    throw std::out_of_range("Error: invalid entry argument(s).");
 }
 
 
@@ -141,25 +141,24 @@ bool operator==(Item _item_obj1, Item _item_obj2){
 //  Item iObj{"itemIdent"};
 //  std::string s = iObj.str();
 const std::string Item::str() const{
-    std::stringstream json;
-    json << "\""<<this->getIdent()<<"\":{";
-    //for loop entering each key and value for entry in json format
+    std::stringstream output;
     int i =0;
+    output << "{";
     for(auto const& x:entries){
         std::string key = x.first;
         std::string value = x.second;
-        //add each key val pair in json format
-        json << "\"" << key << "\"" << ": \"" << value << "\"";
-        //better to not use size function to avoid comparing unsigned int with int
+        output << "\"" << key << "\"" << ":\"" << value << "\"";
+        //loop through all the entries.
         int size = this->entries.size();
         if (i<(size-1)){
+            output << ",";
             //if it is not the last entry in the entries map we add a comma for separation
-            json<<",";
         }
         i++;
     }
-    json << "}";
-    std::string output = json.str();
-    return output;
-}
+    output << "}";
+    output.str();
+    return output.str();
+    }
+
 

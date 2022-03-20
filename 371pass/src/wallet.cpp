@@ -59,7 +59,7 @@ Category &Wallet::newCategory(std::string _cat_ident){
         addCategory(tempCat);
         return getCategory(_cat_ident);
     } catch (std::exception &e){
-        throw std::runtime_error("bleh");
+        throw std::runtime_error("cannot make newCategory.");
     }
 }
 
@@ -91,7 +91,7 @@ bool Wallet::addCategory(Category _category_obj){
         category_list.insert({_category_obj.getIdent(),_category_obj});
         return true;
     } catch(std::exception &e){
-        throw std::runtime_error("bleh");
+        throw std::runtime_error("Error adding item");
     }
 }
 
@@ -108,7 +108,7 @@ Category &Wallet::getCategory(std::string _category_ident){
     if(it != category_list.end()){
         return it->second;
     }
-    throw std::out_of_range("category doesen't exist ");
+    throw std::out_of_range("Error: invalid category argument(s).");
 }
 // TODO Write a function, deleteEntry, that takes one parameter, a Category
 //  identifier, and deletes it from the container, and returns true if the
@@ -214,7 +214,7 @@ void Wallet::load(std::string fileName) {
 
     }
     else{
-        throw std::runtime_error("File won't open");
+        throw std::runtime_error("Error: invalid db argument(s).");
     }
 }
 
@@ -259,26 +259,25 @@ bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2){
 //  Wallet wObj{};
 //  std::string s = wObj.str();
 const std::string Wallet::str() const{
-    std::stringstream json;
-    json<< "{";
-    int i = 0;
+    std::stringstream output;
+    int i =0;
+    output << "{";
+    //loop through all the categories
     for(auto const& x:category_list){
+        output << "\"" << x.first << "\":";
         Category category = x.second;
-        //adding each category in Wallet obj under the wallet's json header
-        std::string  categoryEntries = category.str();
-        json<<categoryEntries;
-
-        //checking if it's not the last category, so we can add a comma
+        std::string  category_list = category.str();
+        output << category_list;
         int size = this->category_list.size();
         if(i<(size-1)){
-            json << ",";
+            output << ",";
         }
         i++;
     }
-    json << "}";
-    std::string jsonStr = json.str();
-    return jsonStr;
+    output << "}";
+    return output.str();
 }
+
 
 
 

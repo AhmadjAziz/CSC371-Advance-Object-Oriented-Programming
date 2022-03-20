@@ -23,6 +23,7 @@ class Category {
         std::map<std::string, Item> items_list;
     public:
         Category(std::string _ident);
+        ~Category() = default;
         bool empty();
         unsigned int size();
         std::string getIdent() const;

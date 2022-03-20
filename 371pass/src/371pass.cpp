@@ -55,24 +55,105 @@ int App::run(int argc, char *argv[]) {
 
   switch (a) {
   case Action::CREATE:
-    throw std::runtime_error("create not implemented");
-    break;
+      //Only read if the first instance is a category, otherwise we go to else.
+      if (args.count("category") != 0) {
+          const std::string category_ident = args["category"].as<std::string>();
+
+          //makes a temp category to later be inserted into database.
+          Category temp_cat{category_ident};
+          if (args.count("item")) {
+              const std::string item_ident = args["item"].as<std::string>();
+
+              //makes a temp item to later be inserted
+              Item temp_item{item_ident};
+              if (args.count("entry")) {
+                  const std::string entry_ident = args["entry"].as<std::string>();
+                  std::stringstream entryInput;
+                  entryInput << entry_ident;
+                  std::string key;
+                  std::string value;
+                  std::getline(entryInput, key, ',');
+                  std::getline(entryInput, value, ',');
+                  temp_item.addEntry(key, value);
+              }
+              temp_cat.addItem(temp_item);
+          }
+          //add the entire thing to our object.
+
+          wObj.addCategory(temp_cat);
+          wObj.save(db);
+      }
+          break;
 
   case Action::READ: {
       //throw std::runtime_error("read not implemented");
+      if (args.count("category") !=0) {
+          const std::string category_ident = args["category"].as<std::string>();
+          try{
+              wObj.getCategory(category_ident);
+          }catch(std::exception &e){
+              std::cerr << e.what();
+              exit(1);
+          }
+          Category temp_cat =  wObj.getCategory(category_ident);
+          if (args.count("item")) {
+              const std::string item_ident = args["item"].as<std::string>();
 
-      try {
-          const std::string category= args["category"].as<std::string>();
-          Category newCat = wObj.getCategory(category);
-          std::cout << App::getJSON(wObj,category);
+              Item temp_item = temp_cat.getItem(item_ident);
+              if(args.count("entry")){
+                  const std::string key = args["entry"].as<std::string>();
+                  try {
+                      //if we ask for entry.
+                      std::cout << App::getJSON(wObj, category_ident, item_ident, key);
+                  } catch(std::exception &e){
+                      std::cerr << e.what();
+                      exit(1);
+                  }
+              }else{
+                  //if we ask for item.
+                  std::cout << App::getJSON(wObj, category_ident, item_ident);
+              }
+          } else{
+              if(args.count("entry")) {
+                  try {
+                      throw std::runtime_error("Error: missing item argument(s).");
+                  } catch (std::exception &e) {
+                      std::cerr << e.what();
+                      exit(1);
+                  }
+              }
+              //if we ask for category
+              try{
+                  std::cout << App::getJSON(wObj, category_ident);
+              } catch(std::exception &e){
+                  std::cerr << e.what();
+                  exit(1);
+              }
 
-      }catch(std::exception &e){
-          std::cout << App::getJSON(wObj);
+          }
+      } else {
+          //we check that the person dosen't bypass categories input.
+          if(args.count("item") || args.count("entry")){
+              try{
+                  throw std::runtime_error("Error: missing category argument(s).");
+              } catch(std::exception &e){
+                  std::cerr << e.what();
+                  exit(1);
+              }
 
+          }else{
+              try{
+                  //if read command is empty.
+                  std::cout << App::getJSON(wObj);
+              }catch(std::exception &e){
+                  std::cerr << e.what();
+                  exit(1);
+              }
+
+          }
       }
   }
-
-    break;
+          break;
   case Action::UPDATE:
     throw std::runtime_error("update not implemented");
     break;
@@ -107,7 +188,7 @@ cxxopts::Options App::cxxoptsSetup() {
       "Apply action to a category (e.g., if you want to add a category, set the"
       " action argument to 'add' and the category argument to your chosen"
       " category identifier).",
-      cxxopts::value<std::string>())(
+      cxxopts::value<std::string>()->default_value("all categories"))(
 
       "item",
       "Apply action to an item (e.g., if you want to add an item, set the "

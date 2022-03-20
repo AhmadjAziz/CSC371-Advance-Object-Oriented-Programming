@@ -31,6 +31,7 @@ class Item {
     //public functions that communicate with the private variables of class.
     public:
         Item(std::string _item_ident);
+        ~Item() = default;
         unsigned int size();
         bool empty();
         std::string getIdent() const;

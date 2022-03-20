@@ -177,23 +177,23 @@ bool operator==(Category _cat_obj1, Category _cat_obj2){
 //  std::string s = cObj.str();
 //  std::string Category::str() {
 const std::string Category::str() const{
-    std::stringstream json;
-    json << "\"" << this->getIdent() <<"\" :{";
+    std::stringstream output;
     int i =0;
-    //the for loop goes through list of items and format it into json.
-    for(auto const& j:items_list){
-        Item item = j.second;
-        std::string list_of_entries = item.str();
-        json << list_of_entries;
-
+    output << "{";
+    //loops through all the items..
+    for(auto const& x:items_list){
+        output << "\"" << x.first << "\":";//item ident
+        Item item = x.second;
+        std::string items_list = item.str();
+        output << items_list;
         int size = this->items_list.size();
         if (i<(size-1)){
-            json << ",";
+            output << ",";
         }
         i++;
     }
-    json << "}";
-    std::string jsonStr = json.str();
-    return jsonStr;
-}
+    output << "}";
+    return output.str();
+    }
+
 

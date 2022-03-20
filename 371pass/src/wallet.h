@@ -24,7 +24,8 @@ class Wallet {
     std::map <std::string, Category> category_list;
 
   public:  
-    Wallet();  
+    Wallet();
+    ~Wallet() = default;
     unsigned int size();
     bool empty();
     Category &newCategory(std::string _category_ident);
