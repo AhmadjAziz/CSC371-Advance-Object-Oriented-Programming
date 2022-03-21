@@ -26,17 +26,17 @@ class Wallet {
   public:  
     Wallet();
     ~Wallet() = default;
-    unsigned int size();
-    bool empty();
-    Category &newCategory(std::string _category_ident);
-    bool addCategory(Category _category_obj);
-    Category &getCategory(std::string _category_ident);
-    bool deleteCategory(std::string _category_ident);
-    void load(std::string);
+    unsigned int size() const;
+    const bool empty() const;
+    Category &newCategory(const std::string _category_ident);
+    const bool addCategory(Category &_category_obj);
+    Category &getCategory(const std::string _category_ident);
+    const bool deleteCategory(const std::string _category_ident);
+    void load(const std::string);
     const std::string str() const;
-    void save(std::string filename);
+    void save(const std::string filename);
     
-  friend bool operator==(Wallet _wallet_obj1, Wallet _wallet_obj2);
+  friend bool operator==(const Wallet &_wallet_obj1, const Wallet &_wallet_obj2);
 };
 
 #endif // WALLET_H
