@@ -7,8 +7,6 @@ include_directories(src)
 
 add_executable(371pass
         src/371pass.h
-        src/category.cpp
-        src/category.h
         src/item.cpp
         src/item.h
         src/lib_catch.hpp
@@ -17,8 +15,6 @@ add_executable(371pass
         src/lib_cxxopts_argv.hpp
         src/lib_json.hpp
         src/main.cpp
-        src/wallet.cpp
-        src/wallet.h
         tests/test1.cpp
         tests/test2.cpp
         tests/test3.cpp

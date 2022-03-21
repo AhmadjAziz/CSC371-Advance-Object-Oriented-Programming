@@ -17,24 +17,7 @@
 #include "lib_cxxopts.hpp"
 #include "wallet.h"
 
-// TODO Complete this function. You have been provided some skeleton code which
-//  retrieves the database file name from cxxopts.
-//  1. Load the database file by calling load() on a Wallet object
-//  2. Parse the 'action' argument to decide what action should be taken (
-//     create, read, update, or delete). Read is the easiest to implement, and
-//     update is the hardest. The details of how these arguments work is in the
-//     coursework specification.
-//  4. Save the updated Wallet object to the JSON file if there have been
-//     changes (calling save() on the Wallet object).
-//
-// Some commented out code has been provided. Using some of this will be
-// demonstrated in the coursework video on Canvas. Remember, this coursework is
-// meant to be challenging and testing your understanding of programming in C++.
-// Part of the challenge is figuring things out on your own. That is a major
-// part of software development.
-//
-// Example:
-//  int main(int argc, char *argv[]) { return App::run(argc, argv); }
+
 int App::run(int argc, char *argv[]) {
     auto options = App::cxxoptsSetup();
     auto args = options.parse(argc, argv);
@@ -48,7 +31,6 @@ int App::run(int argc, char *argv[]) {
     // Open the database and construct the Wallet
     const std::string db = args["db"].as<std::string>();
     Wallet wObj{};
-    // Only uncomment this once you have implemented the load function!
     wObj.load(db);
 
     try {
@@ -60,6 +42,8 @@ int App::run(int argc, char *argv[]) {
     const Action a = parseActionArgument(args);
 
     switch (a) {
+        //Create case goes through various try/catch to see if valid inputs are given.
+        //Based off which entries,items and categories are created
         case Action::CREATE:
             //Only read if the first instance is a category, otherwise we go to else.
             if (args.count("category") != 0) {
@@ -119,6 +103,8 @@ int App::run(int argc, char *argv[]) {
             }
             break;
 
+        //Read case goes through various try/catch to see if valid inputs are given.
+        //Based off which entries,items and categories are retrieved.
         case Action::READ:
             //throw std::runtime_error("read not implemented");
             if (args.count("category") != 0) {
@@ -190,6 +176,10 @@ int App::run(int argc, char *argv[]) {
             }
 
             break;
+
+
+        //Update case goes through various try/catch to see if valid inputs are given.
+        //Based off which entries,items and categories are updated
         case Action::UPDATE:
             //Only read if the first instance is a category, otherwise we go to else.
             if (args.count("category") != 0) {
@@ -255,6 +245,8 @@ int App::run(int argc, char *argv[]) {
             }
             break;
 
+        //Delete case goes through various try/catch to see if valid inputs are given.
+        //Based off which entries,items and categories are deleted
         case Action::DELETE:
             //Only read if the first instance is a category, otherwise we go to else.
             if (args.count("category") != 0) {
@@ -315,7 +307,6 @@ int App::run(int argc, char *argv[]) {
         default:
             throw std::runtime_error("Unknown action not implemented");
     }
-
     return 0;
 }
 
@@ -372,6 +363,8 @@ cxxopts::Options App::cxxoptsSetup() {
 //  App::Action action = parseActionArgument(args);
 App::Action App::parseActionArgument(cxxopts::ParseResult &args) {
     std::string input = args["action"].as<std::string>();
+    //converts the string to lower case.
+    transform(input.begin(), input.end(), input.begin(), ::tolower);
     if (input == "create") {
         return Action::CREATE;
     } else if (input == "read") {
@@ -384,7 +377,7 @@ App::Action App::parseActionArgument(cxxopts::ParseResult &args) {
     throw std::invalid_argument("action");
 }
 
-// TODO Write a function, getJSON, that returns a std::string containing the
+//  returns a std::string containing the
 //  JSON representation of a Wallet object.
 //
 // This function has been implemented for you, but you may wish to adjust it.
@@ -400,7 +393,7 @@ std::string App::getJSON(Wallet &wObj) {
     return wObj.str();
 }
 
-// TODO Write a function, getJSON, that returns a std::string containing the
+//  returns a std::string containing the
 //  JSON representation of a specific Category in a Wallet object.
 //
 // This function has been implemented for you, but you may wish to adjust it.
@@ -418,7 +411,7 @@ std::string App::getJSON(Wallet &wObj, const std::string &c) {
     return cObj.str();
 }
 
-// TODO Write a function, getJSON, that returns a std::string containing the
+//  returns a std::string containing the
 //  JSON representation of a specific Item in a Wallet object.
 //
 // This function has been implemented for you, but you may wish to adjust it.
@@ -439,7 +432,7 @@ std::string App::getJSON(Wallet &wObj, const std::string &c,
     return iObj.str();
 }
 
-// TODO Write a function, getJSON, that returns a std::string containing the
+//  returns a std::string containing the
 //  JSON representation of a specific Entry in a Wallet object.
 //
 // This function has been implemented for you, but you may wish to adjust it.

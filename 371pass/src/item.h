@@ -30,19 +30,19 @@ class Item {
 
     //public functions that communicate with the private variables of class.
     public:
-        Item(std::string _item_ident);
+        Item(const std::string _item_ident);
         ~Item() = default;
-        unsigned int size();
-        bool empty();
+        unsigned int size() const ;
+        const bool empty() const;
         std::string getIdent() const;
-        void setIdent(std::string _new_ident);
-        bool addEntry(std::string _key, std::string _value);
-        std::string getEntry(std::string key);
-        bool deleteEntry(std::string _key);
+        void setIdent(const std::string _new_ident);
+        const bool addEntry(const std::string _key, const std::string _value);
+        std::string getEntry(const std::string key)const;
+        const bool deleteEntry(const std::string _key);
         const std::string str() const ;
         std::map<std::string, std::string> &getEntries();
         
-    friend bool operator==(Item _item_obj1, Item _item_obj2);
+    friend bool operator==(const Item &_item_obj1,const Item &_item_obj2);
 };
 
 #endif // ITEM_H

@@ -22,21 +22,21 @@ class Category {
         //the key is item identifier and value is an item at that key.
         std::map<std::string, Item> items_list;
     public:
-        Category(std::string _ident);
+        Category(const std::string _ident);
         ~Category() = default;
-        bool empty();
-        unsigned int size();
+        const bool empty() const ;
+        unsigned int size() const;
         std::string getIdent() const;
-        void setIdent(std::string _ident);
-        Item &newItem(std::string _item_ident);
-        bool addItem(Item _item_object);
-        Item &getItem(std::string _item_ident);
-        bool deleteItem(std::string _item_ident);
-        Category &operator=(std:: string _ident);
+        void setIdent(const std::string _ident);
+        Item &newItem(const std::string _item_ident);
+        const bool addItem(Item &_item_object);
+        Item &getItem(const std::string _item_ident);
+        const bool deleteItem(const std::string _item_ident);
         std::map<std::string, Item> &getItems();
+        Category &operator=(const std:: string _ident);
         const std::string str() const;
 
-friend bool operator==(Category _cat_obj1, Category _cat_obj2);
+ friend bool operator==(const Category &_cat_obj1,const Category &_cat_obj2);
 };
 
 #endif // CATEGORY_H
