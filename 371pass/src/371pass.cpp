@@ -19,6 +19,7 @@
 
 
 int App::run(int argc, char *argv[]) {
+
     auto options = App::cxxoptsSetup();
     auto args = options.parse(argc, argv);
 
@@ -323,7 +324,7 @@ cxxopts::Options App::cxxoptsSetup() {
             cxxopts::value<std::string>()->default_value("database.json"))(
 
             "action", "Action to take, can be: 'create', 'read', 'update', 'delete'.",
-            cxxopts::value<std::string>())(
+            cxxopts::value<std::string>()->default_value("missing_action"))(
 
             "category",
             "Apply action to a category (e.g., if you want to add a category, set the"
@@ -352,10 +353,9 @@ cxxopts::Options App::cxxoptsSetup() {
     return cxxopts;
 }
 
-// TODO Rewrite this function so that it works. This function should
-//  case-insensitively check the action argument retrieved from cxxopts and
-//  convert this to a value from the ACTION enum. If an invalid value is given
-//  in a string, throw an std::invalid_argument exception.
+//  This function should case-insensitively check the action argument retrieved
+//  from cxxopts and convert this to a value from the ACTION enum.
+//  If an invalid value is givenin a string, throw an std::invalid_argument exception.
 //
 // Example:
 //  auto options = App::cxxoptsSetup();
@@ -363,6 +363,8 @@ cxxopts::Options App::cxxoptsSetup() {
 //  App::Action action = parseActionArgument(args);
 App::Action App::parseActionArgument(cxxopts::ParseResult &args) {
     std::string input = args["action"].as<std::string>();
+
+
     //converts the string to lower case.
     transform(input.begin(), input.end(), input.begin(), ::tolower);
     if (input == "create") {
